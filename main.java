@@ -150,3 +150,22 @@ public class BaseGraffitiWall {
             uniquePainters.size(),
             TOTAL_CELLS - totalPainted
         );
+    }
+
+    public List<String> getAllPainters() {
+        return new ArrayList<>(uniquePainters);
+    }
+
+    public List<Integer> getPaintedCellIds() {
+        return new ArrayList<>(paintedCellIds);
+    }
+
+    public boolean isPainted(int x, int y) {
+        if (x < 0 || x >= GRID_WIDTH || y < 0 || y >= GRID_HEIGHT) return false;
+        return grid.containsKey(y * GRID_WIDTH + x);
+    }
+
+    public void addFunds(BigDecimal amount) {
+        totalCollected = totalCollected.add(amount);
+    }
+
