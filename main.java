@@ -112,3 +112,22 @@ public class BaseGraffitiWall {
         if (x < 0 || x >= GRID_WIDTH || y < 0 || y >= GRID_HEIGHT) {
             throw new IllegalArgumentException("Out of bounds");
         }
+        return grid.get(y * GRID_WIDTH + x);
+    }
+
+    public Cell getCellById(int cellId) {
+        if (cellId < 0 || cellId >= TOTAL_CELLS) {
+            throw new IllegalArgumentException("Invalid cell");
+        }
+        return grid.get(cellId);
+    }
+
+    public List<Integer> getPainterCells(String painter) {
+        return new ArrayList<>(painterCells.getOrDefault(painter, Collections.emptyList()));
+    }
+
+    public static class WallStats {
+        public final int totalPainted;
+        public final int totalCells;
+        public final BigDecimal totalCollected;
+        public final int uniquePainters;
