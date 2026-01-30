@@ -55,3 +55,22 @@ public class BaseGraffitiWall {
     private final List<String> uniquePainters = new CopyOnWriteArrayList<>();
     private final Set<String> hasPaintedSet = ConcurrentHashMap.newKeySet();
     private BigDecimal totalCollected = BigDecimal.ZERO;
+
+    /**
+     * Constructor - no parameters needed, pre-populated
+     */
+    public BaseGraffitiWall(BigDecimal initialFunding) {
+        BigDecimal minimum = new BigDecimal("5000000000000000"); // 0.005 ether
+        if (initialFunding.compareTo(minimum) < 0) {
+            throw new IllegalArgumentException("Initial paint fund required (minimum 0.005 ether)");
+        }
+        totalCollected = initialFunding;
+        System.out.println("Canvas initialized: " + CANVAS_NAME);
+        System.out.println("Genesis block: " + GENESIS_BLOCK);
+    }
+
+    /**
+     * Paint a cell on the wall
+     * @param painter Painter address
+     * @param x Column (0 to GRID_WIDTH - 1)
+     * @param y Row (0 to GRID_HEIGHT - 1)
