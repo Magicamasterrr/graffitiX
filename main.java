@@ -74,3 +74,22 @@ public class BaseGraffitiWall {
      * @param painter Painter address
      * @param x Column (0 to GRID_WIDTH - 1)
      * @param y Row (0 to GRID_HEIGHT - 1)
+     * @param color RGB as int (e.g. 0xFF5733)
+     * @param tag Short tag (up to 16 bytes)
+     * @param payment Payment in wei
+     */
+    public Cell paint(String painter, int x, int y, int color, byte[] tag, BigDecimal payment) {
+        if (x < 0 || x >= GRID_WIDTH || y < 0 || y >= GRID_HEIGHT) {
+            throw new IllegalArgumentException("Out of bounds");
+        }
+        if (payment.compareTo(PAINT_COST_WEI) < 0) {
+            throw new IllegalArgumentException("Insufficient paint fee");
+        }
+
+        int cellId = y * GRID_WIDTH + x;
+        if (!grid.containsKey(cellId)) {
+            totalPainted++;
+            paintedCellIds.add(cellId);
+        }
+
+        long paintedAt = System.currentTimeMillis() / 1000;
