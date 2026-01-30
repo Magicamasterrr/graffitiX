@@ -169,3 +169,17 @@ public class BaseGraffitiWall {
         totalCollected = totalCollected.add(amount);
     }
 
+    public static void main(String[] args) {
+        BaseGraffitiWall wall = new BaseGraffitiWall(new BigDecimal("10000000000000000"));
+
+        String addr1 = "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb";
+        String addr2 = "0x8ba1f109551bD432803012645Hac136c22C9C00";
+
+        wall.paint(addr1, 0, 0, 0xFF5733, "hello".getBytes(StandardCharsets.UTF_8), new BigDecimal("500000000000000"));
+        wall.paint(addr2, 1, 0, 0x33FF57, "base".getBytes(StandardCharsets.UTF_8), new BigDecimal("500000000000000"));
+        wall.paint(addr1, 0, 1, 0x3357FF, "onchain".getBytes(StandardCharsets.UTF_8), new BigDecimal("500000000000000"));
+
+        System.out.println("Wall stats: " + wall.getWallStats());
+        System.out.println("Painted cells: " + wall.getPaintedCellIds());
+    }
+}
