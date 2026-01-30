@@ -93,3 +93,22 @@ public class BaseGraffitiWall {
         }
 
         long paintedAt = System.currentTimeMillis() / 1000;
+        byte[] tagBytes = tag != null ? Arrays.copyOf(tag, Math.min(tag.length, MAX_TAG_BYTES)) : new byte[0];
+        Cell cell = new Cell(painter, color, tagBytes, paintedAt, cellId);
+        grid.put(cellId, cell);
+
+        painterCells.computeIfAbsent(painter, k -> new CopyOnWriteArrayList<>()).add(cellId);
+        paintCount.merge(painter, 1, Integer::sum);
+
+        if (hasPaintedSet.add(painter)) {
+            uniquePainters.add(painter);
+        }
+
+        totalCollected = totalCollected.add(payment);
+        return cell;
+    }
+
+    public Cell getCell(int x, int y) {
+        if (x < 0 || x >= GRID_WIDTH || y < 0 || y >= GRID_HEIGHT) {
+            throw new IllegalArgumentException("Out of bounds");
+        }
