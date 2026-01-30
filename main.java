@@ -131,3 +131,22 @@ public class BaseGraffitiWall {
         public final int totalCells;
         public final BigDecimal totalCollected;
         public final int uniquePainters;
+        public final int cellsRemaining;
+
+        public WallStats(int totalPainted, int totalCells, BigDecimal totalCollected, int uniquePainters, int cellsRemaining) {
+            this.totalPainted = totalPainted;
+            this.totalCells = totalCells;
+            this.totalCollected = totalCollected;
+            this.uniquePainters = uniquePainters;
+            this.cellsRemaining = cellsRemaining;
+        }
+    }
+
+    public WallStats getWallStats() {
+        return new WallStats(
+            totalPainted,
+            TOTAL_CELLS,
+            totalCollected,
+            uniquePainters.size(),
+            TOTAL_CELLS - totalPainted
+        );
