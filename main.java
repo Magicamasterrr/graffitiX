@@ -36,3 +36,22 @@ public class BaseGraffitiWall {
             this.paintedAt = paintedAt;
             this.cellId = cellId;
         }
+
+        public String getPainter() { return painter; }
+        public int getColor() { return color; }
+        public byte[] getTag() { return tag; }
+        public long getPaintedAt() { return paintedAt; }
+        public int getCellId() { return cellId; }
+        public int getR() { return (color >> 16) & 0xFF; }
+        public int getG() { return (color >> 8) & 0xFF; }
+        public int getB() { return color & 0xFF; }
+    }
+
+    private final Map<Integer, Cell> grid = new ConcurrentHashMap<>();
+    private final Map<String, List<Integer>> painterCells = new ConcurrentHashMap<>();
+    private final Map<String, Integer> paintCount = new ConcurrentHashMap<>();
+    private final List<Integer> paintedCellIds = new CopyOnWriteArrayList<>();
+    private int totalPainted = 0;
+    private final List<String> uniquePainters = new CopyOnWriteArrayList<>();
+    private final Set<String> hasPaintedSet = ConcurrentHashMap.newKeySet();
+    private BigDecimal totalCollected = BigDecimal.ZERO;
